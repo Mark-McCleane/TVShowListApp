@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private var page: Int = 1
     private lateinit var mTvShowViewModel: TvShowViewModel
+    private var sortedAsc = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +38,17 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         mTvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
-        mTvShowViewModel.getTvShowListDesc().observe(this, androidx.lifecycle.Observer { newData ->
-            adapter.refreshData(newData)
-        })
+        if (sortedAsc) {
+            mTvShowViewModel.getTvShowListAsc()
+                .observe(this, androidx.lifecycle.Observer { newData ->
+                    adapter.refreshData(newData)
+                })
+        } else {
+            mTvShowViewModel.getTvShowListDesc()
+                .observe(this, androidx.lifecycle.Observer { newData ->
+                    adapter.refreshData(newData)
+                })
+        }
 
         GlobalScope.launch(Dispatchers.IO) {
             val responses = retrofitApi.getAllTvShows(API_KEY, LANGUAGE, page).await()

@@ -6,6 +6,8 @@ import utils.TvShowListDAO
 class TVShowListRepository(private val dao: TvShowListDAO) {
 
     val readAllDataDesc: LiveData<List<TVShowListPageResult>> = dao.readAllTvShowsOrderedDescending()
+    val readAllDataAsc: LiveData<List<TVShowListPageResult>> = dao.readAllTvShowsOrderedAscending()
+
 
     suspend fun addTvShow(newTvShow: TVShowListPageResult){
         dao.addTvShow(newTvShow)
