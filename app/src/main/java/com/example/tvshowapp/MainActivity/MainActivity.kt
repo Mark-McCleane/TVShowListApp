@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val API_KEY: String = "25a8f80ba018b52efb64f05140f6b43c"
+        private const val API_KEY: String = "25a8f80ba018b52efb64f05140f6b43c" //todo move to local properties for best practice
         private const val BASE_URL: String = "https://api.themoviedb.org"
         private const val LANGUAGE: String = "en-US"
     }

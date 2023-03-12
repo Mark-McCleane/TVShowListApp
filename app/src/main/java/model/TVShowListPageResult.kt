@@ -1,7 +1,9 @@
 package model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class TVShowListPageResult(
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("first_air_date") val firstAirDate: String,
