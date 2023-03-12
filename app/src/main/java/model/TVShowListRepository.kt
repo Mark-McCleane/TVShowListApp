@@ -11,5 +11,9 @@ class TVShowListRepository(private val dao: TvShowListDAO) {
         dao.addTvShow(newTvShow)
     }
 
+//    fun getTvShowListDesc(): LiveData<List<TVShowListPageResult>> {
+//        return dao.readAllTvShowsOrderedDescending()
+//    }
+
 
 }

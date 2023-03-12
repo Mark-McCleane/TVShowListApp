@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,40 +16,44 @@
         <ImageView
             android:id="@+id/image_tvshow_poster"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:maxWidth="400px"
-            android:maxHeight="400px"
-            app:srcCompat="@drawable/images" />
+            android:maxWidth="150dp"
+            android:maxHeight="150dp"
+            tools:srcCompat="@drawable/placeholder_image" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="left|center"
-            android:layout_marginStart="10dp">
+            android:layout_marginStart="10dp"
+            android:gravity="start"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_tvshow_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/images"
+                android:gravity="center"
+                android:textSize="30sp"
+                app:fontFamily="sans-serif"
+                app:srcCompat="@drawable/placeholder_image"
                 tools:text="The Last Of Us" />
 
             <TextView
                 android:id="@+id/text_first_air_date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                app:fontFamily="sans-serif"
                 tools:text="2023-01-15" />
 
             <TextView
                 android:id="@+id/text_overview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the United States and depend on each other for survival."
-                />
+                tools:text="Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the United States and depend on each other for survival." />
 
         </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

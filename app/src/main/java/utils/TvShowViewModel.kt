@@ -25,4 +25,8 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
             repository.addTvShow(tvShowListPageResult)
         }
     }
+
+    fun getTvShowListDesc(): LiveData<List<TVShowListPageResult>> {
+        return readAllDataDesc
+    }
 }
