@@ -3,8 +3,11 @@ package com.example.tvshowapp.MainActivity
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.tvshowapp.data.source.FakeTvShowRepository
 import getOrAwaitValue
+import junit.framework.Assert.assertNotNull
 import model.TVShow
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,29 +17,36 @@ class TvShowViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+    private lateinit var fakeTvShowRepository:FakeTvShowRepository
+    private lateinit var testTvShow: TVShow
 
-    private var testTvShow: TVShow
-
-    init {
+    @Before
+    fun setUpViewModel(){
+//        dao = createDao
+//        fakeTvShowRepository = FakeTvShowRepository(dao)
         testTvShow = TVShow("Foo", "01,01,2022", 1, "Foo", "Foo",
             "Foo", "Foo", 1000.00, "Foo", 5.9, 100)
     }
 
+
     @Test
     fun addNewTvShow_SetsNewTvShow() {
-//        fresh ViewModel
         val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
-
         viewModel.addTvShow(testTvShow)
         val value = viewModel.getTvShowListAsc().getOrAwaitValue()
-
         assert(value[0] == testTvShow)
     }
 
     fun getTvShowListAsc_returnsTvShowList(){
         val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
+        viewModel.addTvShow(testTvShow)
+        assertNotNull(viewModel.getTvShowListAsc())
+    }
 
-        viewModel.getTvShowListAsc()
+    fun getTvShowListDes_returnsTvShowList(){
+        val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
+        viewModel.addTvShow(testTvShow)
+        assertNotNull(viewModel.getTvShowListDesc())
     }
 
 

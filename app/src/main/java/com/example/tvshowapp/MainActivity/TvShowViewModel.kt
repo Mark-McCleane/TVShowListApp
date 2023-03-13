@@ -45,6 +45,7 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addTvShowsToRoomDb() {
         val page: Int = 1
+
         val retrofitApi = Retrofit.Builder()
             .baseUrl(TvShowConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
