@@ -20,7 +20,6 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
 
     private val readAllDataDesc: LiveData<List<TVShow>>
     private val readAllDataAsc: LiveData<List<TVShow>>
-
     private val repository: TVShowListRepository
 
     init {

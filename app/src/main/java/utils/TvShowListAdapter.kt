@@ -20,7 +20,7 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         val tvShow = tvShowList[position]
-        val imageUrl:String = "https://image.tmdb.org/t/p/w500/${tvShow.posterPath}"
+        val imageUrl: String = "https://image.tmdb.org/t/p/w500/${tvShow.posterPath}"
         Picasso.get().load(imageUrl).into(holder.tvShowPoster)
         holder.tvShowTitle.setText(tvShow.name)
         holder.tvShowReleaseDate.setText(tvShow.firstAirDate)
@@ -31,16 +31,16 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
         return tvShowList.size
     }
 
-    fun refreshData(data: List<TVShow>){
+    fun refreshData(data: List<TVShow>) {
         this.tvShowList = data
         notifyDataSetChanged()
     }
 
     class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvShowPoster:ImageView = itemView.findViewById(R.id.image_tvshow_poster);
-        val tvShowTitle:TextView = itemView.findViewById(R.id.text_tvshow_title)
-        val tvShowReleaseDate:TextView = itemView.findViewById(R.id.text_first_air_date)
-        val tvShowOverview:TextView = itemView.findViewById(R.id.text_overview)
+        val tvShowPoster: ImageView = itemView.findViewById(R.id.image_tvshow_poster);
+        val tvShowTitle: TextView = itemView.findViewById(R.id.text_tvshow_title)
+        val tvShowReleaseDate: TextView = itemView.findViewById(R.id.text_first_air_date)
+        val tvShowOverview: TextView = itemView.findViewById(R.id.text_overview)
     }
 
 }

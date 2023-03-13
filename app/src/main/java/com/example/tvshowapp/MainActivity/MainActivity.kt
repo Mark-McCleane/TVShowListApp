@@ -12,7 +12,6 @@ import com.example.tvshowapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import utils.TvShowConstants
 import utils.TvShowListAdapter
-import utils.TvShowViewModel
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         sortingSharedPref =
             getSharedPreferences(TvShowConstants.SORTINGSHAREPREF, Context.MODE_PRIVATE)
         mTvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
-
 
         if (sortingSharedPref != null && sortedAsc !=
             sortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
@@ -51,11 +49,12 @@ class MainActivity : AppCompatActivity() {
             finish()
             startActivity(restartIntent)
         }
+        mTvShowViewModel.addTvShowsToRoomDb()
 
         if (sortedAsc) {
             mTvShowViewModel.getTvShowListAsc()
-                .observe(this, androidx.lifecycle.Observer { newData ->
-                    adapter.refreshData(newData)
+                .observe(this, androidx.lifecycle.Observer { data ->
+                    adapter.refreshData(data)
                 })
         } else {
             mTvShowViewModel.getTvShowListDesc()
@@ -63,9 +62,5 @@ class MainActivity : AppCompatActivity() {
                     adapter.refreshData(newData)
                 })
         }
-
-        mTvShowViewModel.addTvShowsToRoomDb()
-
-        //https://api.themoviedb.org/3/tv/top_rated?api_key=25a8f80ba018b52efb64f05140f6b43c&language=en-US&page=1
     }
 }

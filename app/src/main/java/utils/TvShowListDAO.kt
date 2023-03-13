@@ -14,9 +14,8 @@ interface TvShowListDAO {
     suspend fun addTvShow(newTvShow: TVShow)
 
     @Query("SELECT * FROM tvShowListTable t ORDER BY t.name ASC")
-    fun readAllTvShowsOrderedAscending():LiveData<List<TVShow>>
+    fun readAllTvShowsOrderedAscending(): LiveData<List<TVShow>>
 
     @Query("SELECT * FROM tvShowListTable t ORDER BY t.name Desc")
-    fun readAllTvShowsOrderedDescending():LiveData<List<TVShow>>
-
+    fun readAllTvShowsOrderedDescending(): LiveData<List<TVShow>>
 }

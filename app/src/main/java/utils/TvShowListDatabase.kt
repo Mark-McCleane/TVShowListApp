@@ -8,7 +8,6 @@ import model.TVShow
 
 @Database(entities = [TVShow::class], version = 1, exportSchema = false)
 abstract class TvShowListDatabase : RoomDatabase() {
-
     abstract fun tvShowListDao(): TvShowListDAO
 
     companion object{
