@@ -5,12 +5,11 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "tvShowListTable")
-data class TVShowListPageResult(
+data class TVShow(
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("first_air_date") val firstAirDate: String,
     @PrimaryKey(autoGenerate = false) val id: Int,
     val name: String,
-//    @SerializedName("origin_country") val originCountry: List<String>, //todo figure out
     @SerializedName("original_language") val originalLanguage: String,
     @SerializedName("original_name") val originalName: String,
     val overview: String,

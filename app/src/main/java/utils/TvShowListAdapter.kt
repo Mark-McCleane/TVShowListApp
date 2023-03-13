@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.R
 import com.squareup.picasso.Picasso
-import model.TVShowListPageResult
+import model.TVShow
 
 class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolder>() {
-    private var tvShowList = emptyList<TVShowListPageResult>()
+    private var tvShowList = emptyList<TVShow>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
         return TvShowViewHolder(LayoutInflater.from(parent.context)
@@ -31,7 +31,7 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
         return tvShowList.size
     }
 
-    fun refreshData(data: List<TVShowListPageResult>){
+    fun refreshData(data: List<TVShow>){
         this.tvShowList = data
         notifyDataSetChanged()
     }

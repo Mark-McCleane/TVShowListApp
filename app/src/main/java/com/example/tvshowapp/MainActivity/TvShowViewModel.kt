@@ -1,4 +1,4 @@
-package utils
+package com.example.tvshowapp.MainActivity
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,16 +7,19 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import model.TVShowListPageResult
+import model.TVShow
 import model.TVShowListRepository
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
+import utils.RetrofitService
+import utils.TvShowConstants
+import utils.TvShowListDatabase
 
 class TvShowViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val readAllDataDesc: LiveData<List<TVShowListPageResult>>
-    private val readAllDataAsc: LiveData<List<TVShowListPageResult>>
+    private val readAllDataDesc: LiveData<List<TVShow>>
+    private val readAllDataAsc: LiveData<List<TVShow>>
 
     private val repository: TVShowListRepository
 
@@ -27,22 +30,22 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
         readAllDataAsc = repository.readAllDataAsc
     }
 
-    fun addTvShow(tvShowListPageResult: TVShowListPageResult) {
+    fun addTvShow(tvShow: TVShow) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addTvShow(tvShowListPageResult)
+            repository.addTvShow(tvShow)
         }
     }
 
-    fun getTvShowListDesc(): LiveData<List<TVShowListPageResult>> {
+    fun getTvShowListDesc(): LiveData<List<TVShow>> {
         return readAllDataDesc
     }
 
-    fun getTvShowListAsc(): LiveData<List<TVShowListPageResult>> {
+    fun getTvShowListAsc(): LiveData<List<TVShow>> {
         return readAllDataAsc
     }
 
     fun addTvShowsToRoomDb() {
-        var page: Int = 1
+        val page: Int = 1
         val retrofitApi = Retrofit.Builder()
             .baseUrl(TvShowConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
