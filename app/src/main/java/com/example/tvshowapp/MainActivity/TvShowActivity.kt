@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,18 +14,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.MainActivity.utils.TvShowConstants
 import com.example.tvshowapp.MainActivity.utils.TvShowListAdapter
 import com.example.tvshowapp.R
+import com.example.tvshowapp.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TvShowActivity : AppCompatActivity() {
-    private val TAG = "MainActivity"
     private lateinit var mTvShowViewModel: TvShowViewModel
     private var mSortingSharedPref: SharedPreferences? = null
     private var mSortedAsc = true
     private lateinit var mFloatingActionButton: FloatingActionButton
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         mSortingSharedPref =
             getSharedPreferences(TvShowConstants.SORTINGSHAREPREF, Context.MODE_PRIVATE)
@@ -39,11 +41,11 @@ class TvShowActivity : AppCompatActivity() {
         }
 
         val adapter = TvShowListAdapter()
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_tvShowList)
+        val recyclerView = binding.recyclerViewTvShowList
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        mFloatingActionButton = findViewById(R.id.floatingActionButton)
+        mFloatingActionButton = binding.floatingActionButton
         mFloatingActionButton.setOnClickListener {
             mSortedAsc = !mSortedAsc
             val editor = mSortingSharedPref!!.edit()

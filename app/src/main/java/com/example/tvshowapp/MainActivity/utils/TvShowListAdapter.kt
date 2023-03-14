@@ -9,22 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.R
 import com.squareup.picasso.Picasso
 import com.example.tvshowapp.MainActivity.model.TVShow
+import com.example.tvshowapp.databinding.ItemTvShowBinding
 
 class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolder>() {
     private var tvShowList = emptyList<TVShow>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
-        return TvShowViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_tv_show, parent, false))
+        val binding = ItemTvShowBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return TvShowViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         val tvShow = tvShowList[position]
         val imageUrl: String = "https://image.tmdb.org/t/p/w500/${tvShow.posterPath}"
         Picasso.get().load(imageUrl).into(holder.tvShowPoster)
-        holder.tvShowTitle.setText(tvShow.name)
-        holder.tvShowReleaseDate.setText(tvShow.firstAirDate)
-        holder.tvShowOverview.setText(tvShow.overview)
+        holder.tvShowTitle.text = tvShow.name
+        holder.tvShowReleaseDate.text = tvShow.firstAirDate
+        holder.tvShowOverview.text = tvShow.overview
     }
 
     override fun getItemCount(): Int {
@@ -36,11 +38,10 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
         notifyDataSetChanged()
     }
 
-    class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvShowPoster: ImageView = itemView.findViewById(R.id.image_tvshow_poster);
-        val tvShowTitle: TextView = itemView.findViewById(R.id.text_tvshow_title)
-        val tvShowReleaseDate: TextView = itemView.findViewById(R.id.text_first_air_date)
-        val tvShowOverview: TextView = itemView.findViewById(R.id.text_overview)
+    class TvShowViewHolder(val binding: ItemTvShowBinding) : RecyclerView.ViewHolder(binding.root) {
+        val tvShowPoster: ImageView = binding.imageTvshowPoster;
+        val tvShowTitle: TextView = binding.textTvshowTitle
+        val tvShowReleaseDate: TextView = binding.textFirstAirDate
+        val tvShowOverview: TextView = binding.textOverview
     }
-
 }
