@@ -7,16 +7,16 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.tvshowapp.MainActivity.MainActivity
+import com.example.tvshowapp.MainActivity.TvShowActivity
 import junit.framework.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class TvShowActivityTest {
 
-    private val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+    private val activityScenario = ActivityScenario.launch(TvShowActivity::class.java)
 
     @Test
     fun test_IsActivityInView() {

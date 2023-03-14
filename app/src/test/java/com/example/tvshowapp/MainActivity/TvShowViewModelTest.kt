@@ -3,7 +3,6 @@ package com.example.tvshowapp.MainActivity
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.tvshowapp.data.source.FakeTvShowRepository
 import getOrAwaitValue
 import junit.framework.Assert.assertNotNull
 import model.TVShow
@@ -14,10 +13,9 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class TvShowViewModelTest {
-
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
-    private lateinit var fakeTvShowRepository:FakeTvShowRepository
+//    private lateinit var fakeTvShowRepository
     private lateinit var testTvShow: TVShow
 
     @Before
@@ -48,6 +46,4 @@ class TvShowViewModelTest {
         viewModel.addTvShow(testTvShow)
         assertNotNull(viewModel.getTvShowListDesc())
     }
-
-
 }

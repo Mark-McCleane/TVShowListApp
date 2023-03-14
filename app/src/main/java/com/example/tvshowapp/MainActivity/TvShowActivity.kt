@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import utils.TvShowConstants
 import utils.TvShowListAdapter
 
-class MainActivity : AppCompatActivity() {
+class TvShowActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var mTvShowViewModel: TvShowViewModel
     private var sortingSharedPref: SharedPreferences? = null
