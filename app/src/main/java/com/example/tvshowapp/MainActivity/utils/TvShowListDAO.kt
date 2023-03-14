@@ -1,11 +1,11 @@
-package utils
+package com.example.tvshowapp.MainActivity.utils
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import model.TVShow
+import com.example.tvshowapp.MainActivity.model.TVShow
 
 @Dao
 interface TvShowListDAO {

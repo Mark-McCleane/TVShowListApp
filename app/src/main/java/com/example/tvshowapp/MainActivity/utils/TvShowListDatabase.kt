@@ -1,10 +1,10 @@
-package utils
+package com.example.tvshowapp.MainActivity.utils
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import model.TVShow
+import com.example.tvshowapp.MainActivity.model.TVShow
 
 @Database(entities = [TVShow::class], version = 1, exportSchema = false)
 abstract class TvShowListDatabase : RoomDatabase() {
@@ -16,7 +16,7 @@ abstract class TvShowListDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE : TvShowListDatabase? = null
 
-        fun getDatabase(context: Context):TvShowListDatabase{
+        fun getDatabase(context: Context): TvShowListDatabase {
             val tempInstance = INSTANCE
             if(tempInstance != null){
                 return tempInstance

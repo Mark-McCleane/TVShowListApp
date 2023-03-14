@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import model.TVShow
-import model.TVShowListRepository
+import com.example.tvshowapp.MainActivity.model.TVShow
+import com.example.tvshowapp.MainActivity.model.TVShowListRepository
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
-import utils.RetrofitService
-import utils.TvShowConstants
-import utils.TvShowListDatabase
+import com.example.tvshowapp.MainActivity.utils.RetrofitService
+import com.example.tvshowapp.MainActivity.utils.TvShowConstants
+import com.example.tvshowapp.MainActivity.utils.TvShowListDatabase
 
 class TvShowViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -45,6 +45,7 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addTvShowsToRoomDb() {
         val page: Int = 1
+
         val retrofitApi = Retrofit.Builder()
             .baseUrl(TvShowConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
