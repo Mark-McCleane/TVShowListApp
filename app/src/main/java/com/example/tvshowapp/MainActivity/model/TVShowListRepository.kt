@@ -1,7 +1,7 @@
-package model
+package com.example.tvshowapp.MainActivity.model
 
 import androidx.lifecycle.LiveData
-import utils.TvShowListDAO
+import com.example.tvshowapp.MainActivity.utils.TvShowListDAO
 
 open class TVShowListRepository(private val dao: TvShowListDAO) {
 

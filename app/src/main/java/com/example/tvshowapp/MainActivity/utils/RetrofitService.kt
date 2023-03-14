@@ -1,6 +1,6 @@
-package utils
+package com.example.tvshowapp.MainActivity.utils
 
-import model.TVShowListPage
+import com.example.tvshowapp.MainActivity.model.TVShowListPage
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

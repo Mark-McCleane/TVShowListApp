@@ -1,4 +1,4 @@
-package utils
+package com.example.tvshowapp.MainActivity.utils
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.R
 import com.squareup.picasso.Picasso
-import model.TVShow
+import com.example.tvshowapp.MainActivity.model.TVShow
 
 class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolder>() {
     private var tvShowList = emptyList<TVShow>()

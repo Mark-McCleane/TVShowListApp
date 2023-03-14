@@ -3,35 +3,39 @@ package com.example.tvshowapp.MainActivity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tvshowapp.MainActivity.utils.TvShowConstants
+import com.example.tvshowapp.MainActivity.utils.TvShowListAdapter
 import com.example.tvshowapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import utils.TvShowConstants
-import utils.TvShowListAdapter
 
 class TvShowActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var mTvShowViewModel: TvShowViewModel
-    private var sortingSharedPref: SharedPreferences? = null
-    private var sortedAsc = true
-    private lateinit var floatingActionButton: FloatingActionButton
+    private var mSortingSharedPref: SharedPreferences? = null
+    private var mSortedAsc = true
+    private lateinit var mFloatingActionButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sortingSharedPref =
+        mSortingSharedPref =
             getSharedPreferences(TvShowConstants.SORTINGSHAREPREF, Context.MODE_PRIVATE)
         mTvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
 
-        if (sortingSharedPref != null && sortedAsc !=
-            sortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
+        if (mSortingSharedPref != null && mSortedAsc !=
+            mSortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
         ) {
-            sortedAsc = sortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
+            mSortedAsc = mSortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
         }
 
         val adapter = TvShowListAdapter()
@@ -39,19 +43,22 @@ class TvShowActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        floatingActionButton = findViewById(R.id.floatingActionButton)
-        floatingActionButton.setOnClickListener {
-            sortedAsc = !sortedAsc
-            val editor = sortingSharedPref!!.edit()
-            editor.putBoolean(TvShowConstants.SORTING, sortedAsc)
+        mFloatingActionButton = findViewById(R.id.floatingActionButton)
+        mFloatingActionButton.setOnClickListener {
+            mSortedAsc = !mSortedAsc
+            val editor = mSortingSharedPref!!.edit()
+            editor.putBoolean(TvShowConstants.SORTING, mSortedAsc)
             editor.apply()
             val restartIntent: Intent = intent
             finish()
             startActivity(restartIntent)
         }
-        mTvShowViewModel.addTvShowsToRoomDb()
 
-        if (sortedAsc) {
+        if (isOnline(applicationContext)) {
+            mTvShowViewModel.addTvShowsToRoomDb()
+        }
+
+        if (mSortedAsc) {
             mTvShowViewModel.getTvShowListAsc()
                 .observe(this, androidx.lifecycle.Observer { data ->
                     adapter.refreshData(data)
@@ -62,5 +69,25 @@ class TvShowActivity : AppCompatActivity() {
                     adapter.refreshData(newData)
                 })
         }
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

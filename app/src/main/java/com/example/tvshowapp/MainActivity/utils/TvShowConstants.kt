@@ -1,4 +1,4 @@
-package utils
+package com.example.tvshowapp.MainActivity.utils
 
 class TvShowConstants {
     companion object {

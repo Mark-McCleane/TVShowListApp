@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import getOrAwaitValue
 import junit.framework.Assert.assertNotNull
-import model.TVShow
+import com.example.tvshowapp.MainActivity.model.TVShow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
