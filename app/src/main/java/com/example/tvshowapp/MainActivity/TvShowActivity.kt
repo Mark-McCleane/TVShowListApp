@@ -10,10 +10,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.MainActivity.utils.TvShowConstants
 import com.example.tvshowapp.MainActivity.utils.TvShowListAdapter
-import com.example.tvshowapp.R
 import com.example.tvshowapp.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -32,7 +30,7 @@ class TvShowActivity : AppCompatActivity() {
 
         mSortingSharedPref =
             getSharedPreferences(TvShowConstants.SORTINGSHAREPREF, Context.MODE_PRIVATE)
-        mTvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
+        mTvShowViewModel = ViewModelProvider(this)[TvShowViewModel::class.java]
 
         if (mSortingSharedPref != null && mSortedAsc !=
             mSortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
