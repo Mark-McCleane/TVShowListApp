@@ -1,26 +1,29 @@
 package com.example.tvshowapp.MainActivity
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tvshowapp.MainActivity.utils.TvShowConstants
 import com.example.tvshowapp.MainActivity.utils.TvShowListAdapter
 import com.example.tvshowapp.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class TvShowActivity : AppCompatActivity() {
     private lateinit var mTvShowViewModel: TvShowViewModel
     private var mSortingSharedPref: SharedPreferences? = null
     private var mSortedAsc = true
     private lateinit var mFloatingActionButton: FloatingActionButton
-
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: TvShowListAdapter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +41,8 @@ class TvShowActivity : AppCompatActivity() {
             mSortedAsc = mSortingSharedPref!!.getBoolean(TvShowConstants.SORTING, false)
         }
 
-        val adapter = TvShowListAdapter()
-        val recyclerView = binding.recyclerViewTvShowList
+        adapter = TvShowListAdapter()
+        recyclerView = binding.recyclerViewTvShowList
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -49,15 +52,15 @@ class TvShowActivity : AppCompatActivity() {
             val editor = mSortingSharedPref!!.edit()
             editor.putBoolean(TvShowConstants.SORTING, mSortedAsc)
             editor.apply()
-            val restartIntent: Intent = intent
-            finish()
-            startActivity(restartIntent)
+
+            adapter.reverseData()
         }
 
-        if (isOnline(applicationContext)) {
-            mTvShowViewModel.addTvShowsToRoomDb()
-        }
+        addTvShowsForCaching()
+        addObservers()
+    }
 
+    private fun addObservers() {
         if (mSortedAsc) {
             mTvShowViewModel.getTvShowListAsc()
                 .observe(this, androidx.lifecycle.Observer { data ->
@@ -68,6 +71,18 @@ class TvShowActivity : AppCompatActivity() {
                 .observe(this, androidx.lifecycle.Observer { newData ->
                     adapter.refreshData(newData)
                 })
+        }
+    }
+
+    fun addTvShowsForCaching(){
+        if (isOnline(applicationContext)) {
+            mTvShowViewModel.addTvShowsToRoomDb()
+        } else {
+            val noInternetConnectionSnackbar =
+                Snackbar.make(recyclerView, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+            noInternetConnectionSnackbar.setAction("Dismiss",
+                View.OnClickListener { noInternetConnectionSnackbar.dismiss() })
+            noInternetConnectionSnackbar.show()
         }
     }
 
