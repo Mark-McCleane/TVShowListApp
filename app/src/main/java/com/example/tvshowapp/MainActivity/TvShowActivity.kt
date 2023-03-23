@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.example.tvshowapp.MainActivity.utils.TvShowConstants
 import com.example.tvshowapp.MainActivity.utils.TvShowListAdapter
 import com.example.tvshowapp.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class TvShowActivity : AppCompatActivity() {
     private lateinit var mTvShowViewModel: TvShowViewModel
@@ -56,6 +58,12 @@ class TvShowActivity : AppCompatActivity() {
 
         if (isOnline(applicationContext)) {
             mTvShowViewModel.addTvShowsToRoomDb()
+        } else {
+            val noInternetConnectionSnackbar =
+                Snackbar.make(recyclerView, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+            noInternetConnectionSnackbar.setAction("Dismiss",
+                View.OnClickListener { noInternetConnectionSnackbar.dismiss() })
+            noInternetConnectionSnackbar.show()
         }
 
         if (mSortedAsc) {
