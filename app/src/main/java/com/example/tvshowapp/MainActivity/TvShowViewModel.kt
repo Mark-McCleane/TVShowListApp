@@ -9,10 +9,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import com.example.tvshowapp.MainActivity.model.TVShow
 import com.example.tvshowapp.MainActivity.model.TVShowListRepository
-import retrofit2.Retrofit
+import com.example.tvshowapp.MainActivity.utils.TvShowApi
 import retrofit2.await
-import retrofit2.converter.gson.GsonConverterFactory
-import com.example.tvshowapp.MainActivity.utils.RetrofitService
 import com.example.tvshowapp.MainActivity.utils.TvShowConstants
 import com.example.tvshowapp.MainActivity.utils.TvShowListDatabase
 
@@ -46,14 +44,11 @@ class TvShowViewModel(application: Application) : AndroidViewModel(application) 
     fun addTvShowsToRoomDb() {
         val page: Int = 1
 
-        val retrofitApi = Retrofit.Builder()
-            .baseUrl(TvShowConstants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(RetrofitService::class.java)
+        val retrofitTvShowApi = TvShowApi().getApi()
+
 
         GlobalScope.launch(Dispatchers.IO) {
-            val responses = retrofitApi.getAllTvShows(TvShowConstants.API_KEY,
+            val responses = retrofitTvShowApi.getAllTvShows(TvShowConstants.API_KEY,
                 TvShowConstants.LANGUAGE, page).await()
 
             for (result in responses.results) {
