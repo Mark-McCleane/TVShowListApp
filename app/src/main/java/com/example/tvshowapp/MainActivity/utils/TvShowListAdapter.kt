@@ -38,6 +38,11 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
         notifyDataSetChanged()
     }
 
+    fun reverseData() {
+        this.tvShowList = tvShowList.asReversed()
+        notifyDataSetChanged()
+    }
+
     class TvShowViewHolder(val binding: ItemTvShowBinding) : RecyclerView.ViewHolder(binding.root) {
         val tvShowPoster: ImageView = binding.imageTvshowPoster;
         val tvShowTitle: TextView = binding.textTvshowTitle
