@@ -1,10 +1,9 @@
 # TVShowListApp
 
 ## DEMO (Manually Testing)
-![Demo2](https://user-images.githubusercontent.com/26508731/224851123-1612b486-3bbe-470f-ab97-a9b181d35634.gif)
 
 ## App Screenshots (Manually Testing)
-
+![NewAndImprovedDemo](https://user-images.githubusercontent.com/26508731/229649309-46a609a4-68f3-450c-90d7-ef07a6ea7e3b.gif)
 
 ### Pixel 5 (Large Phone Display)
 
