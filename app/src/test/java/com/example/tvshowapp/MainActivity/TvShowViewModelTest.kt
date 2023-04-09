@@ -3,8 +3,7 @@ package com.example.tvshowapp.MainActivity
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import getOrAwaitValue
-import junit.framework.Assert.assertNotNull
+import com.example.tvshowapp.MainActivity.utils.Status
 import com.example.tvshowapp.MainActivity.model.TVShow
 import org.junit.Before
 import org.junit.Rule
@@ -15,35 +14,68 @@ import org.junit.runner.RunWith
 class TvShowViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
-//    private lateinit var fakeTvShowRepository
-    private lateinit var testTvShow: TVShow
+
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
+    private lateinit var viewModel: TvShowViewModel
 
     @Before
-    fun setUpViewModel(){
-//        dao = createDao
-//        fakeTvShowRepository = FakeTvShowRepository(dao)
-        testTvShow = TVShow("Foo", "01,01,2022", 1, "Foo", "Foo",
-            "Foo", "Foo", 1000.00, "Foo", 5.9, 100)
+    fun setup() {
+        viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
     }
-
 
     @Test
-    fun addNewTvShow_SetsNewTvShow() {
-        val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
-        viewModel.addTvShow(testTvShow)
-        val value = viewModel.getTvShowListAsc().getOrAwaitValue()
-        assert(value[0] == testTvShow)
+    fun `addTvShow item with correct fields returns success`(){
+        val tvShow = TVShow("fads", "12/06/2021", 0, "Test","Test",
+            "Test","Test",0.0,"Test", 0.0, 0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.SUCCESS)
     }
 
-    fun getTvShowListAsc_returnsTvShowList(){
-        val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
-        viewModel.addTvShow(testTvShow)
-        assertNotNull(viewModel.getTvShowListAsc())
+    @Test
+    fun `addTvShow item with incorrect name return error`(){
+        val tvShow = TVShow("fads", "12/06/2021", 0, "","Test",
+            "Test","Test",0.0,"Test", 0.0, 0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.ERROR)
     }
 
-    fun getTvShowListDes_returnsTvShowList(){
-        val viewModel = TvShowViewModel(ApplicationProvider.getApplicationContext())
-        viewModel.addTvShow(testTvShow)
-        assertNotNull(viewModel.getTvShowListDesc())
+    @Test
+    fun `addTvShow item with incorrect overview return error`(){
+        val tvShow = TVShow("fads", "12/06/2021", 0, "Test","Test",
+            "Test","",0.0,"Test", 0.0, 0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.ERROR)
+    }
+
+    @Test
+    fun `addTvShow item with incorrect posterpath return success`(){
+        val tvShow = TVShow("fads", "12/06/2021", 0, "Test","Test",
+            "Test","Test",0.0,"", 0.0, 0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.SUCCESS)
+    }
+
+    @Test
+    fun `addTvShow item with incorrect first air date return success`(){
+        val tvShow = TVShow("fads", "", 0, "Test","Test",
+            "Test","Test",0.0,"Test", 0.0, 0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.SUCCESS)
+    }
+
+    @Test
+    fun `addTvShow item with empty fields returns error`() {
+        val tvShow: TVShow = TVShow("", "", 0,"","",
+            "","",0.0,"",0.0,0)
+        viewModel.addTvShow(tvShow)
+        val value = viewModel.insertTvShowStatus.getOrAwaitValueTest()
+        assert(value.getContentIfNotHandled()?.status == Status.ERROR)
     }
 }

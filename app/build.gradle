@@ -55,7 +55,8 @@ dependencies {
 
     //room
     implementation "androidx.room:room-runtime:2.5.0"
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     kapt "androidx.room:room-compiler:2.5.0"
     implementation "androidx.room:room-ktx:2.5.0"
 
@@ -73,4 +74,8 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.9'
     androidTestImplementation('androidx.test:runner:1.5.2')
     androidTestImplementation ('androidx.test:rules:1.5.0')
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+
 }
